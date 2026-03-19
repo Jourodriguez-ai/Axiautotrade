@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoTrade Pro — Trading Automatizado</title>
+<style>
+/* ── Reset & Base ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a28;
+  --accent:#6366f1;--accent2:#818cf8;--accent-glow:#6366f140;
+  --green:#22c55e;--green-dim:#22c55e20;
+  --red:#ef4444;--red-dim:#ef444420;
+  --gold:#f59e0b;
+  --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
+  --border:#1e293b;
+  --radius:12px;--radius-sm:8px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:var(--accent2);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── Container ── */
+.container{max-width:800px;margin:0 auto;padding:0 20px}
+
+/* ── Hero ── */
+.hero{text-align:center;padding:60px 20px 40px;background:linear-gradient(180deg,#0a0a1a 0%,var(--bg) 100%)}
+.hero-badge{display:inline-block;background:var(--accent-glow);color:var(--accent2);padding:6px 16px;border-radius:20px;font-size:0.8rem;font-weight:600;margin-bottom:20px;border:1px solid #6366f130}
+.hero h1{font-size:2.2rem;font-weight:800;line-height:1.2;margin-bottom:16px}
+.hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--text2);font-size:1.05rem;max-width:540px;margin:0 auto 30px}
+.hero-stats{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:24px}
+.hero-stat{text-align:center}
+.hero-stat .num{font-size:1.6rem;font-weight:800;color:var(--green)}
+.hero-stat .lbl{font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px}
+
+/* ── Buttons ── */
+.btn{display:inline-block;padding:14px 32px;border-radius:var(--radius);font-size:1rem;font-weight:700;cursor:pointer;border:none;transition:all .2s}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 20px var(--accent-glow)}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px);text-decoration:none}
+.btn-outline{background:transparent;color:var(--accent2);border:1.5px solid var(--accent)}
+.btn-outline:hover{background:var(--accent-glow);text-decoration:none}
+
+/* ── Sections ── */
+section{padding:50px 20px}
+.section-title{text-align:center;font-size:1.5rem;font-weight:700;margin-bottom:8px}
+.section-sub{text-align:center;color:var(--text2);margin-bottom:36px;font-size:0.95rem}
+
+/* ── Calculator ── */
+.calc-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:600px;margin:0 auto}
+.calc-input-group{margin-bottom:20px}
+.calc-input-group label{display:block;font-size:0.85rem;color:var(--text2);margin-bottom:8px;font-weight:600}
+.calc-input-row{display:flex;align-items:center;gap:10px}
+.calc-input-row span.prefix{font-size:1.4rem;font-weight:700;color:var(--text3)}
+.calc-slider{width:100%;-webkit-appearance:none;height:6px;border-radius:3px;background:var(--bg3);outline:none;margin-top:10px}
+.calc-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 10px var(--accent-glow)}
+.calc-amount{font-size:2rem;font-weight:800;color:var(--text);background:none;border:none;width:120px;text-align:left}
+.calc-presets{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.calc-presets button{background:var(--bg3);color:var(--text2);border:1px solid var(--border);padding:6px 14px;border-radius:20px;font-size:0.8rem;cursor:pointer;transition:all .15s}
+.calc-presets button:hover,.calc-presets button.active{background:var(--accent-glow);color:var(--accent2);border-color:var(--accent)}
+.calc-results{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:24px}
+.calc-result{background:var(--bg3);border-radius:var(--radius-sm);padding:16px;text-align:center}
+.calc-result .period{font-size:0.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.calc-result .range{font-size:0.8rem;color:var(--text2);margin-top:2px}
+.calc-result .value{font-size:1.3rem;font-weight:800;color:var(--green)}
+.calc-result.compound{grid-column:1/-1;background:linear-gradient(135deg,var(--bg3),#1a1a30);border:1px solid #6366f120}
+.calc-result.compound .value{font-size:1.5rem;background:linear-gradient(135deg,var(--green),#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.calc-scenario{display:flex;justify-content:center;gap:8px;margin-bottom:16px}
+.calc-scenario button{background:var(--bg3);color:var(--text2);border:1px solid var(--border);padding:6px 16px;border-radius:20px;font-size:0.78rem;cursor:pointer;transition:all .15s}
+.calc-scenario button.active{border-color:var(--accent);color:var(--accent2);background:var(--accent-glow)}
+.calc-disclaimer{font-size:0.7rem;color:var(--text3);text-align:center;margin-top:16px;line-height:1.4}
+
+/* ── Steps ── */
+.steps{display:grid;grid-template-columns:1fr;gap:16px;max-width:600px;margin:0 auto}
+.step{display:flex;align-items:flex-start;gap:16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.step-num{flex-shrink:0;width:40px;height:40px;border-radius:50%;background:var(--accent-glow);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;border:1.5px solid var(--accent)}
+.step h3{font-size:1rem;font-weight:700;margin-bottom:4px}
+.step p{font-size:0.85rem;color:var(--text2)}
+
+/* ── Instruments ── */
+.instruments{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:500px;margin:0 auto}
+.inst{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center}
+.inst .name{font-weight:700;font-size:0.95rem}
+.inst .type{font-size:0.7rem;color:var(--text3);text-transform:uppercase;margin-top:2px}
+.inst .hours{font-size:0.75rem;color:var(--green);margin-top:4px}
+
+/* ── FAQ ── */
+.faq-list{max-width:600px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{width:100%;background:none;border:none;color:var(--text);padding:18px 0;font-size:0.95rem;font-weight:600;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.faq-q::after{content:'+';font-size:1.3rem;color:var(--text3);transition:transform .2s}
+.faq-item.open .faq-q::after{transform:rotate(45deg);color:var(--accent2)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a p{padding:0 0 18px;font-size:0.85rem;color:var(--text2);line-height:1.6}
+
+/* ── CTA ── */
+.cta-section{text-align:center;padding:50px 20px;background:linear-gradient(180deg,var(--bg) 0%,#0a0a1a 100%)}
+.cta-section h2{font-size:1.8rem;font-weight:800;margin-bottom:12px}
+.cta-section p{color:var(--text2);margin-bottom:24px}
+.cta-buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+
+/* ── Footer ── */
+footer{padding:30px 20px;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:0.7rem;color:var(--text3);line-height:1.6;max-width:600px;margin:0 auto}
+
+/* ── Responsive ── */
+@media(max-width:500px){
+  .hero h1{font-size:1.7rem}
+  .calc-results{grid-template-columns:1fr}
+  .calc-result.compound{grid-column:auto}
+  .instruments{grid-template-columns:repeat(2,1fr)}
+  .hero-stats{gap:20px}
+  .cta-buttons{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">Trading Automatizado con IA</div>
+    <h1>Tu dinero trabajando <span>24/7</span> mientras tú vives</h1>
+    <p>Un bot profesional opera en tu cuenta de broker regulado. Tú depositas, el bot tradea, tú retiras cuando quieras.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap">
+      <a href="#calculadora" class="btn btn-primary">Calcula tus ganancias</a>
+      <a href="#empezar" class="btn btn-outline">Empezar ahora</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">6</div><div class="lbl">Instrumentos</div></div>
+      <div class="hero-stat"><div class="num">24/7</div><div class="lbl">Operando</div></div>
+      <div class="hero-stat"><div class="num">Axi</div><div class="lbl">Broker Regulado</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CALCULADORA ── -->
+<section id="calculadora">
+  <div class="container">
+    <h2 class="section-title">Calculadora de Rendimiento</h2>
+    <p class="section-sub">Pon tu monto y mira las proyecciones estimadas</p>
+    <div class="calc-card">
+      <div class="calc-input-group">
+        <label>Monto de Depósito</label>
+        <div class="calc-input-row">
+          <span class="prefix">$</span>
+          <input type="number" class="calc-amount" id="calcAmount" value="100" min="20" max="10000">
+        </div>
+        <input type="range" class="calc-slider" id="calcSlider" min="20" max="2000" value="100" step="10">
+        <div class="calc-presets">
+          <button onclick="setAmount(50)">$50</button>
+          <button onclick="setAmount(100)" class="active">$100</button>
+          <button onclick="setAmount(200)">$200</button>
+          <button onclick="setAmount(500)">$500</button>
+          <button onclick="setAmount(1000)">$1,000</button>
+        </div>
+      </div>
+
+      <div class="calc-scenario" id="scenarioBtns">
+        <button class="active" onclick="setScenario('conservador')">Conservador</button>
+        <button onclick="setScenario('moderado')">Moderado</button>
+        <button onclick="setScenario('optimista')">Optimista</button>
+      </div>
+
+      <div class="calc-results" id="calcResults"></div>
+      <p class="calc-disclaimer">* Proyecciones estimadas basadas en rendimiento histórico. El fee de 20% sobre ganancias ya está descontado. Trading conlleva riesgo — rendimientos pasados no garantizan resultados futuros. Puedes perder parte o todo tu depósito.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CÓMO FUNCIONA ── -->
+<section id="empezar">
+  <div class="container">
+    <h2 class="section-title">Cómo Funciona</h2>
+    <p class="section-sub">4 pasos simples. Sin experiencia necesaria.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Abre tu cuenta en Axi</h3>
+          <p>Broker regulado por ASIC y FCA. Tu dinero está en TU cuenta — nosotros nunca lo tocamos.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>Deposita desde $20</h3>
+          <p>Tarjeta, transferencia o crypto. Mientras más deposites, mejor gestión de riesgo.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Descarga la app y síguenos</h3>
+          <p>Baja Axi Copy Trading (<a href="https://play.google.com/store/apps/details?id=com.axi.pelican" target="_blank" rel="noopener">Android</a> / <a href="https://apps.apple.com/app/axi-copy-trading/id1589937901" target="_blank" rel="noopener">iPhone</a>), conecta tu cuenta y copia nuestros trades automáticamente.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <h3>Retira cuando quieras</h3>
+          <p>Tu dinero es tuyo. Retira ganancias o el total en cualquier momento directamente desde Axi.</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:30px;display:flex;flex-direction:column;align-items:center;gap:10px">
+      <a href="https://axitradingplatform.onelink.me/rMKA?pid=fynxt_int&deep_link_value=axi://dashboard/?promocode=4718643" target="_blank" rel="noopener" class="btn btn-primary">Abrir en la App</a>
+      <a href="https://www.axi.com/int/live-account?promocode=4718643" target="_blank" rel="noopener" class="btn btn-outline">Abrir desde la Web</a>
+      <p style="font-size:0.75rem;color:var(--text3);margin-top:4px">Registro gratuito — 2 minutos</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── INSTRUMENTOS ── -->
+<section style="background:var(--bg2)">
+  <div class="container">
+    <h2 class="section-title">Instrumentos que Operamos</h2>
+    <p class="section-sub">Diversificación inteligente en los mercados más líquidos</p>
+    <div class="instruments">
+      <div class="inst"><div class="name">BTC/USD</div><div class="type">Crypto</div><div class="hours">24/7</div></div>
+      <div class="inst"><div class="name">ETH/USD</div><div class="type">Crypto</div><div class="hours">24/7</div></div>
+      <div class="inst"><div class="name">XAU/USD</div><div class="type">Oro</div><div class="hours">24/5</div></div>
+      <div class="inst"><div class="name">EUR/USD</div><div class="type">Forex</div><div class="hours">24/5</div></div>
+      <div class="inst"><div class="name">GBP/USD</div><div class="type">Forex</div><div class="hours">24/5</div></div>
+      <div class="inst"><div class="name">USD/JPY</div><div class="type">Forex</div><div class="hours">24/5</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Preguntas Frecuentes</h2>
+    <p class="section-sub">Todo lo que necesitas saber</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">¿Es esto un scam o pirámide?</button>
+        <div class="faq-a"><p>No. Tu dinero está en TU cuenta de Axi, un broker regulado internacionalmente (ASIC, FCA). Nosotros nunca tocamos tu dinero. El bot solo opera trades en tu cuenta. Puedes retirar el 100% de tu balance en cualquier momento directamente desde Axi.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Puedo perder dinero?</button>
+        <div class="faq-a"><p>Sí. Trading SIEMPRE conlleva riesgo. El bot usa gestión de riesgo profesional (máximo 2% por trade, stop loss obligatorio), pero no existe rendimiento garantizado. Invierte solo lo que puedas permitirte perder.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Cuánto ganan ustedes?</button>
+        <div class="faq-a"><p>Transparencia total: ganamos 20% de las ganancias que el bot genera en tu cuenta. Si tú no ganas, nosotros no ganamos. Nuestro incentivo es que tu cuenta crezca. Además, Axi nos paga una comisión por referido — esto no te afecta a ti en nada.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Cuándo puedo retirar mi dinero?</button>
+        <div class="faq-a"><p>Cuando quieras. No hay período de bloqueo. Tu cuenta es tuya. Entras a Axi, solicitas retiro, y el dinero llega en 1-3 días hábiles dependiendo del método.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Qué broker es Axi?</button>
+        <div class="faq-a"><p>Axi es un broker internacional regulado por ASIC (Australia) y FCA (UK). Tiene más de 15 años en el mercado. Acepta clientes de Latinoamérica, Puerto Rico y USA. Depósitos desde $0 sin mínimo, aunque recomendamos al menos $50 para mejor gestión de riesgo.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Necesito saber de trading?</button>
+        <div class="faq-a"><p>No. Tú solo abres la cuenta, depositas, descargas la app de Axi Copy Trading y nos sigues. Cada trade se copia automáticamente a tu cuenta. Tú controlas cuánto riesgo quieres desde la app.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Cuánto es el mínimo para empezar?</button>
+        <div class="faq-a"><p>Puedes empezar desde $20. Sin embargo, cuentas con menos de $50 tienen mayor riesgo porque el bot tiene menos margen para operar. Recomendamos $100+ para mejores resultados.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">¿Es legal?</button>
+        <div class="faq-a"><p>Sí. Axi es un broker regulado. El trading online es legal. Nuestro servicio es gestión de cuentas con consentimiento del cliente. Los ingresos son documentables y declarables para impuestos.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA FINAL ── -->
+<section class="cta-section">
+  <h2>Empieza hoy con solo $20</h2>
+  <p>30+ personas ya están usando el sistema. Tu dinero en tu cuenta, el bot trabajando 24/7.</p>
+  <div class="cta-buttons">
+    <a href="https://axitradingplatform.onelink.me/rMKA?pid=fynxt_int&deep_link_value=axi://dashboard/?promocode=4718643" target="_blank" rel="noopener" class="btn btn-primary">Abrir en la App</a>
+    <a href="https://www.axi.com/int/live-account?promocode=4718643" target="_blank" rel="noopener" class="btn btn-outline">Abrir desde la Web</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p><strong>Disclaimer:</strong> Trading en mercados financieros conlleva riesgo sustancial. Rendimientos pasados no garantizan resultados futuros. Puedes perder parte o todo tu capital invertido. Este servicio no constituye asesoría financiera. Invierte solo capital que puedas permitirte perder. AutoTrade Pro no es un fondo de inversión ni administra dinero de terceros — el bot opera en la cuenta personal del cliente en Axi, broker regulado por ASIC y FCA.</p>
+</footer>
+
+<script>
+// ── Calculator Logic ──
+const scenarios = {
+  conservador: { daily: 0.01, label: '~1%/día' },
+  moderado:    { daily: 0.015, label: '~1.5%/día' },
+  optimista:   { daily: 0.02, label: '~2%/día' }
+};
+let currentScenario = 'conservador';
+const FEE = 0.20; // 20% performance fee
+
+function setAmount(val) {
+  document.getElementById('calcAmount').value = val;
+  document.getElementById('calcSlider').value = Math.min(val, 2000);
+  document.querySelectorAll('.calc-presets button').forEach(b => {
+    b.classList.toggle('active', parseInt(b.textContent.replace(/[$,]/g,'')) === val);
+  });
+  updateCalc();
+}
+
+function setScenario(s) {
+  currentScenario = s;
+  document.querySelectorAll('#scenarioBtns button').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase() === s);
+  });
+  updateCalc();
+}
+
+function updateCalc() {
+  const deposit = parseFloat(document.getElementById('calcAmount').value) || 50;
+  const sc = scenarios[currentScenario];
+  const netDaily = deposit * sc.daily * (1 - FEE);
+  const netWeekly = netDaily * 5;
+  const netMonthly = netDaily * 22; // 22 trading days
+
+  // Compound interest over 6 months (daily compounding, 22 days/month)
+  const dailyNet = sc.daily * (1 - FEE);
+  const compound3 = deposit * Math.pow(1 + dailyNet, 22 * 3);
+  const compound6 = deposit * Math.pow(1 + dailyNet, 22 * 6);
+
+  const fmt = v => '$' + v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+
+  document.getElementById('calcResults').innerHTML = `
+    <div class="calc-result">
+      <div class="period">Diario</div>
+      <div class="value">${fmt(netDaily)}</div>
+      <div class="range">${sc.label}</div>
+    </div>
+    <div class="calc-result">
+      <div class="period">Semanal</div>
+      <div class="value">${fmt(netWeekly)}</div>
+      <div class="range">5 días</div>
+    </div>
+    <div class="calc-result">
+      <div class="period">Mensual</div>
+      <div class="value">${fmt(netMonthly)}</div>
+      <div class="range">fee 20% descontado</div>
+    </div>
+    <div class="calc-result compound">
+      <div class="period">Proyección con Interés Compuesto</div>
+      <div class="value">${fmt(compound6)} en 6 meses</div>
+      <div class="range">${fmt(deposit)} → ${fmt(compound3)} (3m) → ${fmt(compound6)} (6m) · Escenario ${currentScenario}</div>
+    </div>
+  `;
+}
+
+// Sync slider ↔ input
+document.getElementById('calcSlider').addEventListener('input', e => {
+  document.getElementById('calcAmount').value = e.target.value;
+  updateCalc();
+});
+document.getElementById('calcAmount').addEventListener('input', () => {
+  const v = parseInt(document.getElementById('calcAmount').value) || 20;
+  document.getElementById('calcSlider').value = Math.min(v, 2000);
+  updateCalc();
+});
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// Init
+updateCalc();
+</script>
+</body>
+</html>
