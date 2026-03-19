@@ -141,7 +141,7 @@ footer p{font-size:0.7rem;color:var(--text3);line-height:1.6;max-width:600px;mar
 <section id="calculadora">
   <div class="container">
     <h2 class="section-title">Calculadora de Rendimiento</h2>
-    <p class="section-sub">Pon tu monto y mira las proyecciones estimadas</p>
+    <p class="section-sub">El rendimiento varía entre 1% y 2% diario dependiendo del mercado.<br>No todos los días son iguales. Las ganancias se reinvierten automáticamente (interés compuesto diario).</p>
     <div class="calc-card">
       <div class="calc-input-group">
         <label>Monto de Depósito</label>
@@ -345,7 +345,7 @@ function updateCalc() {
       <div class="range">fee 20% descontado</div>
     </div>
     <div class="calc-result compound">
-      <div class="period">Proyección con Interés Compuesto</div>
+      <div class="period">Interés Compuesto Diario (tus ganancias generan más ganancias cada día)</div>
       <div class="value">${fmt(compound6)} en 6 meses</div>
       <div class="range">${fmt(deposit)} → ${fmt(compound3)} (3m) → ${fmt(compound6)} (6m) · Escenario ${currentScenario}</div>
     </div>
