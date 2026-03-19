@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing Kit — AutoTrade Pro</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a28;--accent:#6366f1;--accent2:#818cf8;--green:#22c55e;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--border:#1e293b;--radius:12px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);padding:20px;max-width:900px;margin:0 auto}
+h1{font-size:1.8rem;font-weight:800;margin-bottom:8px;text-align:center}
+h2{font-size:1.3rem;font-weight:700;margin:40px 0 16px;color:var(--accent2)}
+h3{font-size:1rem;font-weight:600;margin:20px 0 8px;color:var(--green)}
+.subtitle{text-align:center;color:var(--text2);margin-bottom:40px}
+
+/* Cards */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.card-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--text3);margin-bottom:8px}
+.msg{background:var(--bg3);border-radius:8px;padding:16px;font-size:0.9rem;line-height:1.6;white-space:pre-wrap;cursor:pointer;position:relative;transition:border .2s;border:1px solid transparent}
+.msg:hover{border-color:var(--accent)}
+.msg::after{content:'Click para copiar';position:absolute;top:8px;right:12px;font-size:0.65rem;color:var(--text3);opacity:0;transition:opacity .2s}
+.msg:hover::after{opacity:1}
+.copied{border-color:var(--green) !important}
+.copied::after{content:'Copiado ✓' !important;color:var(--green) !important;opacity:1 !important}
+
+/* QR Section */
+.qr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.qr-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center}
+.qr-card img{width:200px;height:200px;margin:12px auto;display:block;border-radius:8px;background:#fff;padding:8px}
+.qr-card .qr-label{font-weight:700;font-size:0.95rem;margin-bottom:4px}
+.qr-card .qr-url{font-size:0.7rem;color:var(--text3);word-break:break-all}
+.qr-card .qr-desc{font-size:0.8rem;color:var(--text2);margin-top:8px}
+.btn-download{display:inline-block;margin-top:10px;padding:8px 16px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:0.8rem;cursor:pointer;text-decoration:none;font-weight:600}
+.btn-download:hover{background:var(--accent2)}
+
+/* Flow */
+.flow{display:flex;flex-direction:column;gap:12px}
+.flow-step{display:flex;gap:14px;align-items:flex-start}
+.flow-num{flex-shrink:0;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem}
+.flow-content{flex:1}
+.flow-content strong{display:block;margin-bottom:2px}
+.flow-content p{font-size:0.85rem;color:var(--text2)}
+.flow-arrow{text-align:center;color:var(--text3);font-size:1.2rem}
+
+/* Recruiter */
+.tier-table{width:100%;border-collapse:collapse;margin-top:12px}
+.tier-table th,.tier-table td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);font-size:0.85rem}
+.tier-table th{color:var(--text3);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px}
+.tier-table td:last-child{color:var(--green);font-weight:700}
+
+@media print{body{background:#fff;color:#000}.card,.qr-card{border:1px solid #ddd;background:#f9f9f9}.msg{background:#eee}}
+</style>
+</head>
+<body>
+
+<h1>Marketing Kit</h1>
+<p class="subtitle">Mensajes, flujos y QR codes listos para compartir</p>
+
+<!-- ══════ QR CODES ══════ -->
+<h2>QR Codes</h2>
+<p style="color:var(--text2);font-size:0.85rem;margin-bottom:16px">Imprime o comparte por WhatsApp. Click derecho → "Guardar imagen" para descargar.</p>
+
+<div class="qr-grid">
+  <div class="qr-card">
+    <div class="qr-label">Landing Page</div>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://jourodriguez-ai.github.io/Axiautotrade/" alt="QR Landing">
+    <div class="qr-url">jourodriguez-ai.github.io/Axiautotrade/</div>
+    <div class="qr-desc">Tu página principal — calculadora, info, FAQ</div>
+  </div>
+
+  <div class="qr-card">
+    <div class="qr-label">Axi — Abrir Cuenta (App)</div>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://axitradingplatform.onelink.me/rMKA?pid=fynxt_int%26deep_link_value=axi://dashboard/?promocode=4718643" alt="QR Axi App">
+    <div class="qr-url">OneLink → App de Axi</div>
+    <div class="qr-desc">Abre directo la app de Axi con tu referido</div>
+  </div>
+
+  <div class="qr-card">
+    <div class="qr-label">Axi — Abrir Cuenta (Web)</div>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://www.axi.com/int/live-account?promocode=4718643" alt="QR Axi Web">
+    <div class="qr-url">axi.com/int/live-account?promocode=4718643</div>
+    <div class="qr-desc">Registro web directo en Axi</div>
+  </div>
+
+  <div class="qr-card">
+    <div class="qr-label">Axi Copy Trading — Android</div>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://play.google.com/store/apps/details?id=com.axi.pelican" alt="QR Android">
+    <div class="qr-url">Google Play Store</div>
+    <div class="qr-desc">App de Copy Trading para Android</div>
+  </div>
+
+  <div class="qr-card">
+    <div class="qr-label">Axi Copy Trading — iPhone</div>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://apps.apple.com/app/axi-copy-trading/id1589937901" alt="QR iPhone">
+    <div class="qr-url">App Store</div>
+    <div class="qr-desc">App de Copy Trading para iPhone</div>
+  </div>
+</div>
+
+<!-- ══════ FLUJO ONBOARDING ══════ -->
+<h2>Flujo de Onboarding — Cliente Nuevo</h2>
+<div class="card">
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-num">1</div>
+      <div class="flow-content">
+        <strong>Le mandas el link de la landing</strong>
+        <p>jourodriguez-ai.github.io/Axiautotrade/ — que vea la calculadora y el FAQ</p>
+      </div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step">
+      <div class="flow-num">2</div>
+      <div class="flow-content">
+        <strong>Abre cuenta en Axi con tu link</strong>
+        <p>Desde la landing o directo: axi.com/int/live-account?promocode=4718643. Queda vinculado a tu IB automáticamente.</p>
+      </div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step">
+      <div class="flow-num">3</div>
+      <div class="flow-content">
+        <strong>Deposita (mínimo $20)</strong>
+        <p>Tarjeta, transferencia, o crypto. Recomendado: $100+ para mejor gestión de riesgo.</p>
+      </div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step">
+      <div class="flow-num">4</div>
+      <div class="flow-content">
+        <strong>Descarga Axi Copy Trading</strong>
+        <p>Android: play.google.com → "Axi Copy Trading" / iPhone: App Store → "Axi Copy Trading"</p>
+      </div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step">
+      <div class="flow-num">5</div>
+      <div class="flow-content">
+        <strong>Conecta su cuenta y te sigue</strong>
+        <p>Abre la app → busca tu perfil de trader → click "Copy" → ajusta riesgo → listo</p>
+      </div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-step">
+      <div class="flow-num">6</div>
+      <div class="flow-content">
+        <strong>Listo — los trades se copian solos</strong>
+        <p>Cada vez que tú ejecutas un trade, se copia automáticamente en su cuenta. Él puede retirar cuando quiera.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ MENSAJES WHATSAPP ══════ -->
+<h2>Mensajes para WhatsApp</h2>
+<p style="color:var(--text2);font-size:0.85rem;margin-bottom:16px">Click en cualquier mensaje para copiarlo al clipboard.</p>
+
+<h3>Mensaje inicial — Primer contacto</h3>
+<div class="card">
+  <div class="card-label">Casual / Amigo cercano</div>
+  <div class="msg" onclick="copyMsg(this)">Bro te quiero mostrar algo que estoy montando. Es un sistema de trading automatizado — un bot analiza el mercado 24/7 y ejecuta trades.
+
+Tú abres tu cuenta en un broker regulado (Axi), depositas lo que quieras desde $20, y el bot opera en tu cuenta automáticamente. Tú no tienes que hacer nada.
+
+Mira aquí: https://jourodriguez-ai.github.io/Axiautotrade/
+
+Tiene una calculadora donde pones tu monto y ves las proyecciones. Tu plata está en TU cuenta siempre — retiras cuando quieras.
+
+¿Te interesa?</div>
+</div>
+
+<div class="card">
+  <div class="card-label">Profesional / No tan cercano</div>
+  <div class="msg" onclick="copyMsg(this)">Hola! Te escribo porque estoy lanzando un servicio de trading automatizado y creo que te puede interesar.
+
+Funciona así: abres una cuenta en Axi (broker regulado internacionalmente), depositas desde $20, y un sistema de inteligencia artificial opera automáticamente en tu cuenta.
+
+Tu dinero está siempre en tu propia cuenta — nosotros nunca lo tocamos. Retiras cuando quieras.
+
+Aquí puedes ver más info y calcular las proyecciones: https://jourodriguez-ai.github.io/Axiautotrade/
+
+Si tienes preguntas me dices!</div>
+</div>
+
+<h3>Seguimiento — Después de que vio la landing</h3>
+<div class="card">
+  <div class="msg" onclick="copyMsg(this)">¿Pudiste ver la página? ¿Qué te pareció?
+
+Si quieres arrancar es bien sencillo:
+1. Abre cuenta aquí: https://www.axi.com/int/live-account?promocode=4718643
+2. Deposita lo que quieras (desde $20)
+3. Descarga la app "Axi Copy Trading" en tu celular
+4. Me sigues en la app y los trades se copian solos
+
+Yo te guío paso a paso si quieres 👊</div>
+</div>
+
+<h3>Para resolver dudas comunes</h3>
+<div class="card">
+  <div class="card-label">"¿Es seguro?" / "¿No es scam?"</div>
+  <div class="msg" onclick="copyMsg(this)">Entiendo la duda — hay mucho scam ahí afuera. Pero esto es diferente:
+
+- Tu dinero está en TU cuenta de Axi, un broker regulado por ASIC (Australia) y FCA (UK) con 15+ años
+- Yo nunca toco tu dinero — el bot solo ejecuta trades en tu cuenta
+- Puedes retirar el 100% de tu balance cuando quieras
+- Axi no es una app random — es un broker internacional usado por miles de traders
+
+Lo único que yo gano es un 20% de las ganancias que el bot genere. Si tú no ganas, yo no gano. Nuestro incentivo es que tu cuenta crezca.</div>
+</div>
+
+<div class="card">
+  <div class="card-label">"¿Puedo perder dinero?"</div>
+  <div class="msg" onclick="copyMsg(this)">Sí, es importante ser honesto con eso. Trading SIEMPRE tiene riesgo — nadie puede garantizar ganancias.
+
+Lo que hace el bot diferente es que usa gestión de riesgo profesional:
+- Máximo 2% de tu cuenta en riesgo por trade
+- Stop loss obligatorio en cada operación
+- Diversificación en 6 instrumentos diferentes
+
+No es "hazte rico rápido" — es un sistema consistente que busca crecer tu cuenta gradualmente. Por eso recomiendo empezar con una cantidad que no te duela si la pierdes.</div>
+</div>
+
+<h3>Para reclutadores</h3>
+<div class="card">
+  <div class="card-label">Propuesta de comisión</div>
+  <div class="msg" onclick="copyMsg(this)">Te tengo una propuesta. Estoy montando un servicio de trading automatizado y necesito gente que me ayude a traer clientes.
+
+Por cada persona que traigas, te pago comisión mensual FIJA mientras su cuenta esté activa:
+
+- Depósito $50-$99: $5/mes por persona
+- Depósito $100-$199: $8/mes por persona
+- Depósito $200-$499: $12/mes por persona
+- Depósito $500+: $15/mes por persona
+
+Ejemplo: traes 10 personas con $100 cada una = $80/mes para ti, todos los meses.
+
+Tú solo compartes el link, yo me encargo de todo lo demás. ¿Te interesa?</div>
+</div>
+
+<!-- ══════ COMISIONES RECLUTADORES ══════ -->
+<h2>Tabla de Comisiones — Reclutadores</h2>
+<div class="card">
+  <table class="tier-table">
+    <thead>
+      <tr><th>Depósito del cliente</th><th>Comisión mensual</th><th>Ejemplo: 10 referidos</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>$50 — $99</td><td>$5/mes</td><td>$50/mes</td></tr>
+      <tr><td>$100 — $199</td><td>$8/mes</td><td>$80/mes</td></tr>
+      <tr><td>$200 — $499</td><td>$12/mes</td><td>$120/mes</td></tr>
+      <tr><td>$500+</td><td>$15/mes</td><td>$150/mes</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.75rem;color:var(--text3);margin-top:12px">* Comisiones se pagan del ingreso del operador, no del cliente. Pago mensual mientras la cuenta esté activa.</p>
+</div>
+
+<!-- ══════ DISCLAIMERS PARA COPIAR ══════ -->
+<h2>Disclaimers (para copiar)</h2>
+<div class="card">
+  <div class="card-label">Disclaimer corto (para stories/posts)</div>
+  <div class="msg" onclick="copyMsg(this)">Trading conlleva riesgo. Rendimientos pasados no garantizan resultados futuros. Invierte solo lo que puedas perder.</div>
+</div>
+<div class="card">
+  <div class="card-label">Disclaimer completo (para documentos)</div>
+  <div class="msg" onclick="copyMsg(this)">AVISO DE RIESGO: Trading en mercados financieros conlleva riesgo sustancial de pérdida. Los rendimientos pasados no son indicativos de resultados futuros. Puedes perder parte o la totalidad de tu capital invertido. Este servicio no constituye asesoría financiera, legal o fiscal. Cada individuo es responsable de sus propias decisiones de inversión. Solo invierte capital que puedas permitirte perder sin afectar tu calidad de vida. AutoTrade Pro no es un fondo de inversión ni administra dinero de terceros — el sistema opera en la cuenta personal del cliente en Axi, broker regulado por ASIC y FCA. Al utilizar este servicio, aceptas que entiendes los riesgos involucrados.</div>
+</div>
+
+<script>
+function copyMsg(el) {
+  navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+    el.classList.add('copied');
+    setTimeout(() => el.classList.remove('copied'), 2000);
+  });
+}
+</script>
+</body>
+</html>
